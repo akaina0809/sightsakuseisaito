@@ -9,7 +9,7 @@ function convert() {
 	let resultpanel =   `///*///${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\t/g, '\\t')}///*///\n\nimport {world,system} from"@minecraft/server";import {ActionFormData,ModalFormData}from"@minecraft/server-ui";system.events.beforeWatchdogTerminate.subscribe(data => {data.cancel = true});\n\n\nworld.events.beforeChat.subscribe(ev => {`
 
 	if (name === '') {
-		window.alert('オリジナル名が空欄です。\n名前には分かりやすい名前を入力してください。')
+		window.alert('オリジナル名が空欄です。\nコマンド名には分かりやすい名前を入力してください。')
 		return;
 	}
 
@@ -19,14 +19,16 @@ function convert() {
 		let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
 		if (i > 0) resultpanel = resultpanel + '\n'
 		if (currentgyou.startsWith('h>')) {
-			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');}`
+			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');
+			}`
 			continue
 		}
 
 		//HSPで作ってたときのやつと互換性を維持するためのやつ
 		if (currentgyou.startsWith('htp:h>')) {
 			resultpanel = resultpanel + `
-			     player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';}`
+			     player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';
+			     }`
 			continue
 		}
 
@@ -37,7 +39,7 @@ function convert() {
 	        ev.cancel = true;
 	        const player = ev.sender;`
 	}
-	resultpanel = resultpanel + '});'
+	resultpanel = resultpanel + '\n});'
 	resultbox.value = resultpanel
 	downloadbtn.disabled = false;
 	copybtn.disabled = false;
