@@ -19,7 +19,7 @@ function convert() {
 		let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
 		if (i > 0) resultpanel = resultpanel + '\n'
 		if (currentgyou.startsWith('h>')) {
-			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');`
+			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');}`
 			continue
 		}
 
