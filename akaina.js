@@ -9,7 +9,7 @@ function convert() {
 	let resultpanel =   `///*///${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\t/g, '\\t')}///*///\n\nimport {world,system} from"@minecraft/server";import {ActionFormData,ModalFormData}from"@minecraft/server-ui";system.events.beforeWatchdogTerminate.subscribe(data => {data.cancel = true});\n\n\nworld.events.beforeChat.subscribe(ev => {`
 
 	if (name === '') {
-		window.alert('オリジナル名が空欄です。\nコマンド名には分かりやすい名前を入力してください。')
+		window.alert('オリジナル名が空欄です。\n名前には分かりやすい名前を入力してください。')
 		return;
 	}
 
