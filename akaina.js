@@ -19,16 +19,13 @@ function convert() {
 		let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
 		if (i > 0) resultpanel = resultpanel + '\n'
 		if (currentgyou.startsWith('h>')) {
-			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');
-			}`
+			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');}`
 			continue
 		}
 
 		//HSPで作ってたときのやつと互換性を維持するためのやつ
 		if (currentgyou.startsWith('htp:h>')) {
-			resultpanel = resultpanel + `
-			     player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';
-			     }`
+			resultpanel = resultpanel + `player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';}`
 			continue
 		}
 
@@ -39,7 +36,7 @@ function convert() {
 	        ev.cancel = true;
 	        const player = ev.sender;`
 	}
-	resultpanel = resultpanel + '\n});'
+	resultpanel = resultpanel + '});'
 	resultbox.value = resultpanel
 	downloadbtn.disabled = false;
 	copybtn.disabled = false;
