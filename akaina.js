@@ -19,14 +19,14 @@ function convert() {
 		let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
 		if (i > 0) resultpanel = resultpanel + '\n'
 		if (currentgyou.startsWith('h>')) {
-			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');\n}`
+			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');}`
 			continue
 		}
 
 		//HSPで作ってたときのやつと互換性を維持するためのやつ
 		if (currentgyou.startsWith('htp:h>')) {
 			resultpanel = resultpanel + `
-			     player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';\n}`
+			     player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';}`
 			continue
 		}
 
