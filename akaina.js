@@ -6,37 +6,53 @@ function convert() {
 	let downloadbtn = document.getElementById("download_btn")
 	copybtn.value = "コピーする";
 
-	let resultpanel =   `///*///${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\t/g, '\\t')}///*///\n\nimport {world,system} from"@minecraft/server";import {ActionFormData,ModalFormData}from"@minecraft/server-ui";system.events.beforeWatchdogTerminate.subscribe(data => {data.cancel = true});\n\n\nworld.events.beforeChat.subscribe(ev => {`
+	let resultpanel =   `///*///${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\t/g, '\\t')}///*///\n\nimport { world } from "@minecraft/server";
+world.beforeEvents.chatSend.subscribe((eventData) => {
+const player = eventData.sender;`
 
 	if (name === '') {
 		window.alert('オリジナル名が空欄です。\nコマンド名には分かりやすい名前を入力してください。')
 		return;
 	}
-
+//${currentgyou.replace('h>', '')}//
 
 	for (let i = 0; i < honbun.split('\n').length; i++) {
 		console.log(i)
 		let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
 		if (i > 0) resultpanel = resultpanel + '\n'
 		if (currentgyou.startsWith('h>')) {
-			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('h>', '')}');}`
+			resultpanel = resultpanel +  `
+		case '${currentgyou.replace('h>', '')}':
+	eventData.cancel = true;`
+			continue
+		}
+		if (currentgyou.startsWith('c>')) {
+			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('c>', '')}');
+			break;`
 			continue
 		}
 
 		//HSPで作ってたときのやつと互換性を維持するためのやつ
 		if (currentgyou.startsWith('htp:h>')) {
-			resultpanel = resultpanel + `player.runCommandAsync(${currentgyou.replace('htp:h>', '')})';}`
+			resultpanel = resultpanel + `
+		case '${currentgyou.replace('htp:h>', '')}':
+	eventData.cancel = true;`
+			continue
+		}
+
+		if (currentgyou.startsWith('htp:c>')) {
+			resultpanel = resultpanel + `player.runCommandAsync('${currentgyou.replace('htp:c>', '')}');
+			break;`
 			continue
 		}
 
 
 	
 	resultpanel = resultpanel + `
-	      if (ev.message.startsWith("${currentgyou}")) {
-	        ev.cancel = true;
-	        const player = ev.sender;`
+	if (!player.hasTag('${currentgyou}')) return;
+	switch (eventData.message) {`
 	}
-	resultpanel = resultpanel + '});'
+	resultpanel = resultpanel + '\ndefault: break;}});'
 	resultbox.value = resultpanel
 	downloadbtn.disabled = false;
 	copybtn.disabled = false;
