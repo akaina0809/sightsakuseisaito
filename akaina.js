@@ -6,53 +6,54 @@ function convert() {
 	let downloadbtn = document.getElementById("download_btn")
 	copybtn.value = "コピーする";
 
-	let resultpanel =   `///*///${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\t/g, '\\t')}///*///\n\nimport { world } from "@minecraft/server";
-world.beforeEvents.chatSend.subscribe((eventData) => {
-const player = eventData.sender;`
+let resultpanel =   `//${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\t/g, '\\t')}\n\nimport { world, system } from "@minecraft/server";`
 
 	if (name === '') {
-		window.alert('オリジナル名が空欄です。\nコマンド名には分かりやすい名前を入力してください。')
+		window.alert('個人名が空欄です。\n個人名には分かりやすい名前を入力してください。')
 		return;
 	}
-//${currentgyou.replace('h>', '')}//
 
 	for (let i = 0; i < honbun.split('\n').length; i++) {
 		console.log(i)
 		let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
 		if (i > 0) resultpanel = resultpanel + '\n'
 		if (currentgyou.startsWith('h>')) {
-			resultpanel = resultpanel +  `
-		case '${currentgyou.replace('h>', '')}':
-	eventData.cancel = true;`
+			resultpanel = resultpanel +  `world.beforeEvents.chatSend.subscribe(ev => {
+			      if (ev.message.startsWith("!akaina0807")) {
+			        ev.cancel = true;
+			        const player = ev.sender;
+			        player.runCommandAsync('tellraw @s {"rawtext":[{"text":"<server>これは赫稲が作成したサイトから作れます。アプデで使えなくなった場合はYouTubeまたはコロニーにて報告をお願いします。discord Twitter でも構いません。"}]}');
+			      }else if (ev.message.startsWith("${currentgyou.replace('h>', '')}")) {
+			    ev.cancel = true;
+			    const player = ev.sender;`
 			continue
 		}
 		if (currentgyou.startsWith('c>')) {
-			resultpanel = resultpanel +  `player.runCommandAsync('${currentgyou.replace('c>', '')}');
-			break;`
+			resultpanel = resultpanel +  `
+			player.runCommandAsync('${currentgyou.replace('c>', '')}');}`
 			continue
 		}
 
 		//HSPで作ってたときのやつと互換性を維持するためのやつ
 		if (currentgyou.startsWith('htp:h>')) {
 			resultpanel = resultpanel + `
-		case '${currentgyou.replace('htp:h>', '')}':
-	eventData.cancel = true;`
+			else if (ev.message.startsWith("${currentgyou.replace('htp:h>', '')}")) {
+			  ev.cancel = true;
+			  const player = ev.sender;`
 			continue
 		}
 
 		if (currentgyou.startsWith('htp:c>')) {
-			resultpanel = resultpanel + `player.runCommandAsync('${currentgyou.replace('htp:c>', '')}');
-			break;`
+			resultpanel = resultpanel + `
+			player.runCommandAsync('${currentgyou.replace('htp:c>', '')}');}`
 			continue
 		}
 
 
 	
-	resultpanel = resultpanel + `
-	if (!player.hasTag('${currentgyou}')) return;
-	switch (eventData.message) {`
+	resultpanel = resultpanel + `//${currentgyou}`
 	}
-	resultpanel = resultpanel + '\ndefault: break;}});'
+	resultpanel = resultpanel + '\n});'
 	resultbox.value = resultpanel
 	downloadbtn.disabled = false;
 	copybtn.disabled = false;
