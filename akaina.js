@@ -23,7 +23,7 @@ function convert() {
     let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
     if (i > 0) resultpanel = resultpanel + '\n'
     if (currentgyou.startsWith('h>')) {
-      resultpanel = resultpanel + `else if (ev.message.startsWith("${currentgyou.replace('h>', '')}")) {
+      resultpanel = resultpanel + `else if (ev.message.startsWith("!${currentgyou.replace('h>', '')}")) {
 			    ev.cancel = true;
 			    const player = ev.sender;`
       continue
@@ -37,7 +37,7 @@ function convert() {
     //HSPで作ってたときのやつと互換性を維持するためのやつ
     if (currentgyou.startsWith('htp:h>')) {
       resultpanel = resultpanel + `
-			else if (ev.message.startsWith("${currentgyou.replace('htp:h>', '')}")) {
+			else if (ev.message.startsWith("!${currentgyou.replace('htp:h>', '')}")) {
 			  ev.cancel = true;
 			  const player = ev.sender;`
       continue
