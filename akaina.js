@@ -11,7 +11,7 @@ function convert() {
           ev.cancel = true;
           const player = ev.sender;
           player.runCommandAsync('tellraw @s {"rawtext":[{"text":"<server>これは赫稲が作成したサイトから作れます。アプデで使えなくなった場合はYouTubeまたはコロニーにて報告をお願いします。discord Twitter でも構いません。"}]}');
-        }`
+        `
 
   if (name === '') {
     window.alert('個人名が空欄です。\n個人名には分かりやすい名前を入力してください。')
@@ -23,29 +23,26 @@ function convert() {
     let currentgyou = honbun.split(/\r\n|\r|\n/)[i].replace(/\\/g, '\\\\')
     if (i > 0) resultpanel = resultpanel + '\n'
     if (currentgyou.startsWith('h>')) {
-      resultpanel = resultpanel + `else if (ev.message.startsWith("!${currentgyou.replace('h>', '')}")) {
+      resultpanel = resultpanel + `\n}else if (ev.message.startsWith("!${currentgyou.replace('h>', '')}")) {
 			    ev.cancel = true;
 			    const player = ev.sender;`
       continue
     }
     if (currentgyou.startsWith('c>')) {
-      resultpanel = resultpanel + `
-			player.runCommandAsync('${currentgyou.replace('c>', '')}');}`
+      resultpanel = resultpanel + `			  player.runCommandAsync('${currentgyou.replace('c>', '')}');`
       continue
     }
 
     //HSPで作ってたときのやつと互換性を維持するためのやつ
     if (currentgyou.startsWith('htp:h>')) {
-      resultpanel = resultpanel + `
-			else if (ev.message.startsWith("!${currentgyou.replace('htp:h>', '')}")) {
+      resultpanel = resultpanel + `\n}else if (ev.message.startsWith("!${currentgyou.replace('htp:h>', '')}")) {
 			  ev.cancel = true;
 			  const player = ev.sender;`
       continue
     }
 
     if (currentgyou.startsWith('htp:c>')) {
-      resultpanel = resultpanel + `
-			player.runCommandAsync('${currentgyou.replace('htp:c>', '')}');}`
+      resultpanel = resultpanel + `			  player.runCommandAsync('${currentgyou.replace('htp:c>', '')}');`
       continue
     }
 
@@ -53,7 +50,7 @@ function convert() {
 
     resultpanel = resultpanel + `//${currentgyou}`
   }
-  resultpanel = resultpanel + '\n});'
+  resultpanel = resultpanel + '\n}\n});'
   resultbox.value = resultpanel
   downloadbtn.disabled = false;
   copybtn.disabled = false;
