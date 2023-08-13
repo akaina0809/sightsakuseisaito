@@ -32,6 +32,13 @@ function convert() {
       resultpanel = resultpanel + `			  player.runCommandAsync('${currentgyou.replace('c>', '')}');`
       continue
     }
+    if (currentgyou.startsWith('no>')) {
+      resultpanel = resultpanel + `\n}else if (ev.message.startsWith("${currentgyou.replace('no>', '')}")) {
+			    ev.cancel = true;
+			    const player = ev.sender;
+			    player.runCommandAsync('この言葉は禁止されております。\n(This word is prohibited.)');`
+      continue
+    }
 
     //HSPで作ってたときのやつと互換性を維持するためのやつ
     if (currentgyou.startsWith('htp:h>')) {
@@ -43,6 +50,14 @@ function convert() {
 
     if (currentgyou.startsWith('htp:c>')) {
       resultpanel = resultpanel + `			  player.runCommandAsync('${currentgyou.replace('htp:c>', '')}');`
+      continue
+    }
+
+    if (currentgyou.startsWith('htp:no>')) {
+      resultpanel = resultpanel + `\n}else if (ev.message.startsWith("${currentgyou.replace('htp:no>', '')}")) {
+			    ev.cancel = true;
+			    const player = ev.sender;
+			    player.runCommandAsync('この言葉は禁止されております。\n(This word is prohibited.)');`
       continue
     }
 
