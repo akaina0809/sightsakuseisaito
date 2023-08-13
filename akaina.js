@@ -36,7 +36,7 @@ function convert() {
       resultpanel = resultpanel + `\n}else if (ev.message.startsWith("${currentgyou.replace('no>', '')}")) {
 			    ev.cancel = true;
 			    const player = ev.sender;
-			    player.runCommandAsync('この言葉は禁止されております。(This word is prohibited.)');`
+			    player.runCommandAsync('この言葉は禁止されております。(This word is prohibited.)"}]}');`
       continue
     }
 
@@ -57,7 +57,7 @@ function convert() {
       resultpanel = resultpanel + `\n}else if (ev.message.startsWith("${currentgyou.replace('htp:no>', '')}")) {
 			    ev.cancel = true;
 			    const player = ev.sender;
-			    player.runCommandAsync('tellraw @s {"rawtext":[{"text":"この言葉は禁止されております。(This word is prohibited.)');`
+			    player.runCommandAsync('tellraw @s {"rawtext":[{"text":"この言葉は禁止されております。(This word is prohibited.)"}]}');`
       continue
     }
 
